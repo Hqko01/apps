@@ -1,2 +1,2 @@
 # apps
-İşe yarar ufak tefek uygulamalar
+Burada ufak tefek uygulamalar yer alıyor.
