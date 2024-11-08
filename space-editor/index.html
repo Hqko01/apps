@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space editor</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Montserrat", sans-serif;
+        }
+
+        p,
+        p>div,
+        span,
+        strong,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        s {
+            color: white !important;
+            background-color: transparent !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            font-family: "Montserrat", sans-serif !important;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1pc;
+            height: 100vh;
+            padding: 2pc;
+            background-color: #06011E;
+            overflow: hidden;
+        }
+
+        .input {
+            position: relative;
+            width: 90%;
+            height: 100%;
+        }
+
+        .input .textarea {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: .5pc;
+            border: none;
+            outline: none;
+            background-color: #121936;
+            border-radius: .5pc;
+            border: 3px solid #ffffff33;
+            transition: .2s ease;
+            color: white;
+            overflow-y: auto;
+            overflow-x: hidden;
+            text-wrap: wrap;
+        }
+
+        *::-webkit-scrollbar {
+            width: .5pc;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        *::-webkit-scrollbar-thumb {
+            background-color: #5a23ff;
+        }
+
+        .input .textarea::before {
+            content: 'Metin Buraya';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4vw;
+            font-weight: bolder;
+            z-index: 1;
+            color: rgb(255, 255, 255);
+            opacity: .3;
+            transition: .4s ease;
+        }
+
+        .input .textarea:focus {
+            border-color: #5a23ff;
+        }
+
+        .input .textarea:focus::before {
+            opacity: 0;
+        }
+
+        button {
+            width: 90%;
+            height: max-content;
+            padding: .5pc 0;
+            border: none;
+            outline: none;
+            border-radius: .5pc;
+            background-color: #5a23ff;
+            color: white;
+            font-size: 1.7vw;
+            font-weight: bolder;
+            transition: .2s ease;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #5a23ffb7;
+        }
+
+        button:active {
+            transition: .1s ease;
+            transform: scale(.99);
+        }
+
+        .output {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%);
+            width: 65%;
+            height: 70%;
+            background-color: #121936;
+            border-radius: 2pc;
+            z-index: 3;
+            cursor: pointer;
+            overflow-y: auto;
+            opacity: 0;
+            visibility: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            transition: .4s ease;
+            padding: 1pc;
+        }
+
+        .output.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%);
+        }
+
+        .effect {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(.2pc);
+            opacity: 0;
+            visibility: hidden;
+            transition: .2s ease;
+        }
+
+        .effect.active {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="effect"></div>
+    <div class="input">
+        <div class="textarea" contenteditable="true"></div>
+    </div>
+    <button id="edit">Düzenle</button>
+
+    <div class="output">
+        <p></p>
+    </div>
+</body>
+
+<script>
+    const effect = document.querySelector('.effect')
+    const input = document.querySelector('.input')
+    const button = document.getElementById('edit')
+    const output = document.querySelector('.output')
+
+    input.children[0].addEventListener('dblclick', () => {
+        navigator.clipboard.readText()
+            .then((text) => {
+                input.children[0].textContent = text
+                input.children[0].style.cssText = 'border-color: #70ff75'
+                setTimeout(() => {
+                    input.children[0].style.cssText = 'border-color: #ffffff33'
+                }, 500)
+            })
+    })
+
+    button.addEventListener('click', () => {
+        var text = input.children[0].textContent
+        var editedText = ""
+
+        for (var x = 0; x < text.split(" ").length; x++) {
+            if(text.split(" ")[x].replace(/\s/, "") != "") {
+                editedText += text.split(" ")[x].trim() + " "
+            }
+        }
+
+        output.children[0].textContent = editedText
+
+        effect.classList.add('active')
+        output.classList.add('active')
+    })
+
+    output.addEventListener('click', () => {
+        navigator.clipboard.writeText(output.children[0].textContent)
+
+        output.style.cssText = 'border-color: #70ff75'
+        setTimeout(() => {
+            output.style.cssText = 'border-color: #ffffff33'
+
+            setTimeout(() => {
+                effect.classList.remove('active')
+                output.classList.remove('active')
+
+                input.children[0].textContent = ""
+            }, 500)
+        }, 500)
+    })
+
+    effect.addEventListener('click', () => {
+        effect.classList.remove('active')
+        output.classList.remove('active')
+    })
+</script>
+
+</html>
