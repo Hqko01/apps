@@ -353,8 +353,8 @@
         navigator.clipboard.writeText(output.children[0].children[0].textContent)
 
         if (e.target.getAttribute('type') != undefined && e.target.getAttribute('type') == "translate") {
-            window.open(`https://www.deepl.com/tr/translator#en/tr/${output.children[0].children[0].textContent}`)
-            
+            window.location = `https://www.deepl.com/tr/translator#en/tr/${output.children[0].children[0].textContent}`
+
             output.style.cssText = 'border-color: #70ff75'
             setTimeout(() => {
                 output.style.cssText = 'border-color: #ffffff33'
