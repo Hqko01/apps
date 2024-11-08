@@ -48,7 +48,7 @@
         .input {
             position: relative;
             width: 90%;
-            height: 100%;
+            height: 90%;
         }
 
         .input .textarea {
@@ -83,12 +83,32 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            width: 100%;
+            text-align: center;
             font-size: 4vw;
             font-weight: bolder;
             z-index: 1;
             color: rgb(255, 255, 255);
             opacity: .3;
             transition: .4s ease;
+        }
+
+        @media only screen and (max-width: 900px) {
+            .input .textarea::before {
+                font-size: 4.5vw;
+            }
+        }
+
+        @media only screen and (max-width: 700px) {
+            .input .textarea::before {
+                font-size: 5vw;
+            }
+        }
+
+        @media only screen and (max-width: 450px) {
+            .input .textarea::before {
+                font-size: 5.5vw;
+            }
         }
 
         .input .textarea:focus {
@@ -101,7 +121,7 @@
 
         button {
             width: 90%;
-            height: max-content;
+            height: 10%;
             padding: .5pc 0;
             border: none;
             outline: none;
@@ -112,6 +132,36 @@
             font-weight: bolder;
             transition: .2s ease;
             cursor: pointer;
+        }
+
+        @media only screen and (max-width: 900px){
+            button {
+                font-size: 2vw;
+            }
+        }
+        
+        @media only screen and (max-width: 700px){
+            button {
+                font-size: 2.3vw;
+            }
+        }
+
+        @media only screen and (max-width: 550px){
+            button {
+                font-size: 2.6vw;
+            }
+        }
+
+        @media only screen and (max-width: 500px){
+            button {
+                font-size: 2.9vw;
+            }
+        }
+
+        @media only screen and (max-width: 400px){
+            button {
+                font-size: 3.2vw;
+            }
         }
 
         button:hover {
