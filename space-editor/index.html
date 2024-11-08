@@ -343,6 +343,7 @@
             }
         }
 
+        editedText = editedText.replaceAll('%', ' percent')
         output.children[0].children[0].textContent = editedText
 
         effect.classList.add('active')
