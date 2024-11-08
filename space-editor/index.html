@@ -187,7 +187,7 @@
             overflow-y: auto;
             opacity: 0;
             visibility: hidden;
-            border: 3px solid rgba(255, 255, 255, 0.3);
+            border: 3px solid #ffffff4d;
             transition: .4s ease;
             padding: 1pc;
         }
@@ -353,17 +353,25 @@
         navigator.clipboard.writeText(output.children[0].children[0].textContent)
 
         if (e.target.getAttribute('type') != undefined && e.target.getAttribute('type') == "translate") {
-            window.location = `https://www.deepl.com/tr/translator#en/tr/${output.children[0].children[0].textContent}`
+            if (output.children[0].children[0].textContent.length == 0) {
+                output.style.cssText = 'border-color: #ff4747'
+                setTimeout(() => {
+                    output.style.cssText = 'border-color: #ffffff4d'
+                }, 500)
+            }
+            else {
+                window.location = `https://www.deepl.com/tr/translator#en/tr/${output.children[0].children[0].textContent}`
 
-            output.style.cssText = 'border-color: #70ff75'
-            setTimeout(() => {
-                output.style.cssText = 'border-color: #ffffff33'
-            }, 500)
+                output.style.cssText = 'border-color: #70ff75'
+                setTimeout(() => {
+                    output.style.cssText = 'border-color: #ffffff4d'
+                }, 500)
+            }
         }
         else {
             output.style.cssText = 'border-color: #70ff75'
             setTimeout(() => {
-                output.style.cssText = 'border-color: #ffffff33'
+                output.style.cssText = 'border-color: #ffffff4d'
 
                 setTimeout(() => {
                     effect.classList.remove('active')
